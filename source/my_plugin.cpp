@@ -1,15 +1,19 @@
 #include "my_plugin.hpp"
 #include <reaper_plugin_functions.h>
+#include <stdio.h>
 
 // names
-auto COMMAND = "MYTAG_MY_COMMAND";
-auto ACTION = "MyTag: My action";
+auto COMMAND = "BalancePro";
+auto ACTION = "BalancePro";
 
 // our "main function" in this example
 void MainFunctionOfMyPlugin()
 {
-    char buf[] = "Hello World\n";
-    ShowConsoleMsg(buf);
+    int TotalNumMediaItems = CountMediaItems(0); 
+    char Msg[100];
+    sprintf_s(Msg, "Total Media Items = %i", TotalNumMediaItems);
+    
+    ShowConsoleMsg(Msg);
     return;
 }
 
