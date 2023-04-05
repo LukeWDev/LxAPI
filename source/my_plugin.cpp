@@ -1,19 +1,21 @@
 #include "my_plugin.hpp"
 #include <reaper_plugin_functions.h>
-#include <stdio.h>
+#include <string>
+#include <format>
 
-// names
+constexpr ReaProject* THIS_PROJ = nullptr; 
+
+
 auto COMMAND = "BalancePro";
 auto ACTION = "BalancePro";
 
-// our "main function" in this example
 void MainFunctionOfMyPlugin()
 {
-    int TotalNumMediaItems = CountMediaItems(0); 
-    char Msg[100];
-    sprintf_s(Msg, "Total Media Items = %i", TotalNumMediaItems);
-    
-    ShowConsoleMsg(Msg);
+    int TotalNumMediaItems = CountMediaItems(THIS_PROJ); 
+
+    std::string log{std::format("total items: {}", TotalNumMediaItems)};
+
+    ShowConsoleMsg(log.c_str());
     return;
 }
 

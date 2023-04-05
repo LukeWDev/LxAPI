@@ -47,7 +47,7 @@ struct ReaScriptAPI<R(*)(Args...)>
     }
   }
 
-private:
+private:  
   template<size_t I>
   using NthType = typename std::tuple_element<I, std::tuple<Args...>>::type;
 
