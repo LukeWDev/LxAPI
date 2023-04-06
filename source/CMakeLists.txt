@@ -1,7 +1,8 @@
 add_library(
     reaper_plugin OBJECT
     main.cpp
-    my_plugin.cpp
+    plugin.cpp
+    balance_pro/bp_actions.cpp
 )
 
 target_include_directories(

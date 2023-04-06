@@ -21,11 +21,12 @@ struct structAPIdef
 };
 #define APIFUNC(x) (void*)x, #x, reinterpret_cast<void*>(&InvokeReaScriptAPI<&x>), "APIvararg_" #x "", "API_" #x "", "APIdef_" #x ""
 
-class CORE
+class PLUGIN
 {
 public:
 	void Add(structAPIdef apiDef);
 	void Register();
+	void Unregister();
 private:
 	std::vector<structAPIdef> apiDefinitions{};
 };
