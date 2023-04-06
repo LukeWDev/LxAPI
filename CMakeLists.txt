@@ -21,7 +21,7 @@ if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
     set(USER_CONFIG_DIR "~/.config")
   endif()
 
-  set(CMAKE_INSTALL_PREFIX "${USER_CONFIG_DIR}/REAPER" CACHE PATH
+  set(CMAKE_INSTALL_PREFIX "C:/Users/lukew/Documents/Reaper" CACHE PATH
     "REAPER resource path where to install ReaFab" FORCE)
 endif()
 
