@@ -2,6 +2,6 @@
 
 namespace bp_actions
 {
-    int lxu_CountMediaItems(int A, int B);
+    int lx_CountMediaItems(int A, int B);
 }
 

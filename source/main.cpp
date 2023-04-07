@@ -16,7 +16,7 @@ extern "C"
         g_hInst = hInstance;
         if (rec && REAPERAPI_LoadAPI(rec->GetFunc) == 0) 
         {
-            plugin.Add(structAPIdef{APIFUNC(lxu_CountMediaItems), "int", "int,int", "A,B", "test"});
+            plugin.Add(structAPIdef{APIFUNC(lx_CountMediaItems), "int", "int,int", "A,B", "test"});
             plugin.Register();
             return 1;
         }
