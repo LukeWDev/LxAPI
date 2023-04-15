@@ -3,6 +3,8 @@ add_library(
     main.cpp
     plugin.cpp
     balance_pro/bp_actions.cpp
+    utilities/AudioBuffer.cpp
+    utilities/AudioSource.cpp
 )
 
 target_include_directories(
