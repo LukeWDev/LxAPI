@@ -23,7 +23,8 @@ public:
     [[nodiscard]] int GetTotalSamples() const { return std::floor(GetSampleRate() * audioSourcePtr->GetLength()); }
     [[nodiscard]] int GetWindowSizeSamples(const int windowSizeMs) const { return std::floor(GetTotalSamples() * windowSizeMs / 1000); }
 
-    void GetSourceRMS(const int bufferSize = 512, const int windowSizeMs = 300);
+    [[nodiscard]] double GetSourceRMS(const int bufferSize = 512, const int windowSizeMs = 300);
+    [[nodiscard]] double GetSourceLUFS(const int bufferSize = 512, const int windowSizeMs = 300);
 
 private:
 

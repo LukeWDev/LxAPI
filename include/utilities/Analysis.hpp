@@ -15,14 +15,11 @@ public:
         void RegisterWindowRMS();
         void RegisterWindowSumSquaredValue(const double sample);
         [[nodiscard]] double GetRMS();
-
         [[nodiscard]] bool IsComplete() { return bComplete; }
         [[nodiscard]] int GetNumWindows() { return numWindows; }
         [[nodiscard]] int GetCurrentWindow() const { return currentWindow; }
         [[nodiscard]] bool IsEndOfWindow(const int numProcessedSamples) const;
 
-        
-        
 private:
 
         std::vector<double> windowRMSValues{};

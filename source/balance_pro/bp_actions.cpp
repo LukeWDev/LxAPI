@@ -30,7 +30,7 @@ namespace bp_actions
 
         auto itemTake = GetActiveTake(item);
         std::unique_ptr<AudioSource> itemSource = std::make_unique<AudioSource>(GetMediaItemTake_Source(itemTake));
-        itemSource->GetSourceRMS(512, window);
+        const auto rms = itemSource->GetSourceRMS(512, window);
         return -150;
     }
 }

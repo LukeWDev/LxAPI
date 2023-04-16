@@ -11,12 +11,16 @@
 
 using std::vector;
 
+//-----------------------------------------------------------------------------
+
 AudioSource::AudioSource(PCM_source* source)
 {
     audioSourcePtr = source;
 }
 
-void AudioSource::GetSourceRMS(const int bufferSize, const int windowSizeMs)
+//-----------------------------------------------------------------------------
+
+double AudioSource::GetSourceRMS(const int bufferSize, const int windowSizeMs)
 {
     AudioBuffer buffer(*this, bufferSize);
     RMS rms(*this, windowSizeMs);
@@ -42,8 +46,15 @@ void AudioSource::GetSourceRMS(const int bufferSize, const int windowSizeMs)
         }
         buffer.RefillSamples();
     }
-
     std::string totallog{std::format("\ntotal rms = {}dB\n", rms.GetRMS())};
     ShowConsoleMsg(totallog.c_str());
+
+    return rms.GetRMS();
 }
 
+//-----------------------------------------------------------------------------
+
+double AudioSource::GetSourceLUFS(const int bufferSize, const int windowSizeMs)
+{
+    return -150.0;
+}

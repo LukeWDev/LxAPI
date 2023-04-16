@@ -5,6 +5,8 @@
 #include <string>
 #include <format>
 
+//-----------------------------------------------------------------------------
+
 RMS::RMS(AudioSource& audioSource, const int windowSizeMs)
 {
     totalSamples = audioSource.GetTotalSamples();
@@ -14,6 +16,8 @@ RMS::RMS(AudioSource& audioSource, const int windowSizeMs)
     windowSumSquares.assign(numWindows, 0.0);
     windowRMSValues.assign(numWindows, 0.0);
 }
+
+//-----------------------------------------------------------------------------
 
 double RMS::GetRMS()
 {
@@ -31,6 +35,8 @@ double RMS::GetRMS()
     return rmsDb;
 }
 
+//-----------------------------------------------------------------------------
+
 void RMS::RegisterWindowRMS()
 {
     const int windowSamples = currentWindow == numWindows ? finalWindowSize : int(samplesPerWindow);
@@ -40,7 +46,13 @@ void RMS::RegisterWindowRMS()
     {
         // perform average weighted RMS calculation
         windowRMS = std::sqrt(windowSumSquares[currentWindow - 1] / windowSamples);
-        const double finalWindowChange = GetPercentageChange(double(samplesPerWindow), double(finalWindowSize));
+        
+        const double finalWindowChange = GetPercentageChange(double(finalWindowSize), double(samplesPerWindow));
+        if (finalWindowChange > 40)
+        {
+            std::string perc{std::format("\nPercentage Change ({})% > 25%.", finalWindowChange)};
+            ShowConsoleMsg(perc.c_str());
+        }
     }
     else
     {
@@ -60,10 +72,14 @@ void RMS::RegisterWindowRMS()
     ++currentWindow;
 }
 
+//-----------------------------------------------------------------------------
+
 void RMS::RegisterWindowSumSquaredValue(const double sample)
 {
     windowSumSquares[currentWindow - 1] += sample;
 }
+
+//-----------------------------------------------------------------------------
 
 bool RMS::IsEndOfWindow(const int numProcessedSamples) const 
 {
@@ -76,9 +92,12 @@ bool RMS::IsEndOfWindow(const int numProcessedSamples) const
     return false;
 }
 
+//-----------------------------------------------------------------------------
+
 double RMS::GetPercentageChange(const double a, const double b)
 {
-    const double test = (b - a) / std::abs(b);
-    const double test2 = test * 100;
-    return std::round(test2 * 100) / 100;
+    const double percentageChange = ((b - a) / std::abs(b)) * 100.0;
+    return std::round(percentageChange * 100) / 100;
 }
+
+//-----------------------------------------------------------------------------
