@@ -58,3 +58,5 @@ double AudioSource::GetSourceLUFS(const int bufferSize, const int windowSizeMs)
 {
     return -150.0;
 }
+
+//-----------------------------------------------------------------------------

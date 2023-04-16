@@ -15,6 +15,8 @@ public:
         void RegisterWindowRMS();
         void RegisterWindowSumSquaredValue(const double sample);
         [[nodiscard]] double GetRMS();
+        [[nodiscard]] double GetLUFS();
+
         [[nodiscard]] bool IsComplete() { return bComplete; }
         [[nodiscard]] int GetNumWindows() { return numWindows; }
         [[nodiscard]] int GetCurrentWindow() const { return currentWindow; }
@@ -24,6 +26,7 @@ private:
 
         std::vector<double> windowRMSValues{};
         std::vector<double> windowSumSquares{};
+        std::vector<double> windowLUFSValues{};
         double rmsDb{0.0};
         int currentWindow{1};
         bool bComplete{false};

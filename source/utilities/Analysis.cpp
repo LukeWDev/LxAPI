@@ -5,6 +5,8 @@
 #include <string>
 #include <format>
 
+constexpr double kWeighting[] = {0.000134953719792, -0.000684293878449, -0.001703125622262, 0.004319411963422, 0.010748280220502, -0.034369749082910, -0.056438536367083, 0.221213729304326, 0.602740664762386, 0.222213729304326, -0.056438536367083, -0.034369749082910, 0.010748280220502, 0.004319411963422, -0.001703125622262, -0.000684293878449, 0.000134953719792};
+
 //-----------------------------------------------------------------------------
 
 RMS::RMS(AudioSource& audioSource, const int windowSizeMs)
@@ -37,6 +39,13 @@ double RMS::GetRMS()
 
 //-----------------------------------------------------------------------------
 
+double RMS::GetLUFS()
+{
+    return -150.0;
+}
+
+//-----------------------------------------------------------------------------
+
 void RMS::RegisterWindowRMS()
 {
     const int windowSamples = currentWindow == numWindows ? finalWindowSize : int(samplesPerWindow);
@@ -46,7 +55,7 @@ void RMS::RegisterWindowRMS()
     {
         // perform average weighted RMS calculation
         windowRMS = std::sqrt(windowSumSquares[currentWindow - 1] / windowSamples);
-        
+
         const double finalWindowChange = GetPercentageChange(double(finalWindowSize), double(samplesPerWindow));
         if (finalWindowChange > 40)
         {
