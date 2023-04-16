@@ -5,6 +5,7 @@ add_library(
     balance_pro/bp_actions.cpp
     utilities/AudioBuffer.cpp
     utilities/AudioSource.cpp
+    utilities/Analysis.cpp
 )
 
 target_include_directories(
