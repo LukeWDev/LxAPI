@@ -23,13 +23,13 @@ AudioSource::AudioSource(PCM_source* source)
 double AudioSource::GetSourceRMS(const int bufferSize, const int windowSizeMs)
 {
     AudioBuffer buffer(*this, bufferSize);
-    RMS rms(*this, windowSizeMs);
+    Analysis analysis(*this, windowSizeMs);
 
     int numProcessedSamples{0};
 
     while (buffer.SamplesOut()) // while there are samples to process
     {   
-        if (rms.IsComplete())
+        if (analysis.IsComplete())
             break;
 
         for (int currentSample = 0; currentSample < buffer.SamplesOut(); currentSample++)
@@ -37,26 +37,56 @@ double AudioSource::GetSourceRMS(const int bufferSize, const int windowSizeMs)
             ++numProcessedSamples;
 
             const ReaSample sampleValue = buffer.GetSampleAt(currentSample);
-            rms.RegisterWindowSumSquaredValue(std::pow(sampleValue, 2));
+            analysis.RegisterWindowSumSquaredValue(std::pow(sampleValue, 2));
 
-            if (rms.IsEndOfWindow(numProcessedSamples))
+            if (analysis.IsEndOfWindow(numProcessedSamples))
             {
-                rms.RegisterWindowRMS();
+                analysis.RegisterWindowRMS();
             }
         }
         buffer.RefillSamples();
     }
-    std::string totallog{std::format("\ntotal rms = {}dB\n", rms.GetRMS())};
-    ShowConsoleMsg(totallog.c_str());
+    const auto rmsResult = analysis.GetRMSResults().rmsDb;
+    std::string rmsresult{std::format("\ntotal rms = {}dB\n", rmsResult)};
+    ShowConsoleMsg(rmsresult.c_str());
 
-    return rms.GetRMS();
+    return rmsResult;
 }
 
 //-----------------------------------------------------------------------------
 
 double AudioSource::GetSourceLUFS(const int bufferSize, const int windowSizeMs)
 {
-    return -150.0;
+    AudioBuffer buffer(*this, bufferSize);
+    Analysis analysis(*this, windowSizeMs);
+
+     int numProcessedSamples{0};
+
+    while (buffer.SamplesOut()) // while there are samples to process
+    {   
+        if (analysis.IsComplete())
+            break;
+
+        for (int currentSample = 0; currentSample < buffer.SamplesOut(); currentSample++)
+        {
+            ++numProcessedSamples;
+
+            const ReaSample sampleValue = buffer.GetSampleAt(currentSample);
+            analysis.RegisterWindowSumSquaredValue(std::pow(sampleValue, 2));
+
+            if (analysis.IsEndOfWindow(numProcessedSamples))
+            {
+                analysis.RegisterWindowRMS();
+            }
+        }
+        buffer.RefillSamples();
+    }
+
+    const auto lufsResult = analysis.GetLUFSResults().lufsDb;
+    std::string lufsresult{std::format("\ntotal rms = {}dB\n", lufsResult)};
+    ShowConsoleMsg(lufsresult.c_str());
+
+    return lufsResult;
 }
 
 //-----------------------------------------------------------------------------

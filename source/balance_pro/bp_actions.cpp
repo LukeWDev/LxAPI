@@ -9,6 +9,9 @@ constexpr ReaProject* THIS_PROJ = nullptr;
 
 namespace bp_actions
 {
+
+    //-----------------------------------------------------------------------------
+
     int lx_CountMediaItems(int A, int B)
     {
         int TotalNumMediaItems = CountMediaItems(THIS_PROJ); 
@@ -23,6 +26,8 @@ namespace bp_actions
         return Total;
     }
 
+    //-----------------------------------------------------------------------------
+
     double lx_GetItemRMS(MediaItem* item, int window)
     {
         if (!item)
@@ -30,7 +35,9 @@ namespace bp_actions
 
         auto itemTake = GetActiveTake(item);
         std::unique_ptr<AudioSource> itemSource = std::make_unique<AudioSource>(GetMediaItemTake_Source(itemTake));
-        const auto rms = itemSource->GetSourceRMS(512, window);
-        return -150;
+        const auto results = itemSource->GetSourceRMS(512, window);
+        return results;
     }
+
+    //-----------------------------------------------------------------------------
 }

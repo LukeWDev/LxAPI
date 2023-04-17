@@ -5,7 +5,7 @@
 #include <cmath>
 
 class AudioBuffer;
-class RMS;
+class Analysis;
 
 class AudioSource
 {
