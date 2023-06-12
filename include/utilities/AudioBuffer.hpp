@@ -12,6 +12,11 @@ class AudioBuffer
     explicit AudioBuffer(const AudioSource& source, int bufferLength, int startSample = 0);
     ~AudioBuffer();
 
+    AudioBuffer(const AudioBuffer& other) = delete;
+    AudioBuffer& operator=(const AudioBuffer&) = delete;
+    AudioBuffer(AudioBuffer&&) = delete;
+    AudioBuffer& operator=(AudioBuffer&&) = delete;
+
     void RefillSamples();
     
     [[nodiscard]] int SamplesOut() const { return buffer.samples_out; }
@@ -24,5 +29,4 @@ class AudioBuffer
     const AudioSource* bufferAudioSource{};
     PCM_source_transfer_t buffer{};
     int bufferFrame{0};
-
 };

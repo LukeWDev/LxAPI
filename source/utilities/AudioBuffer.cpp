@@ -15,8 +15,8 @@ AudioBuffer::AudioBuffer(const AudioSource& source, int bufferLength, int startS
     buffer.samplerate = sampleRate;
     buffer.nch = bufferAudioSource->GetNumChannels();
     buffer.length = bufferLength;
-    //unique_ptr<ReaSample> sample = std::make_unique<ReaSample>(uint64_t(buffer.length) * buffer.nch);
-    //buffer.samples = sample.get();
+    // unique_ptr<double> sample = std::make_unique<double>((uint64_t)(buffer.length) * buffer.nch);
+    // buffer.samples = sample.get();
     buffer.samples = new ReaSample[static_cast<uint64_t>(buffer.length) * buffer.nch];
     buffer.absolute_time_s = 0.0;
 
